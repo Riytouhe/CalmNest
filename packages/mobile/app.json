@@ -2,7 +2,7 @@
   "expo": {
     "icon": "./assets/icon.png",
     "android": {
-      "package": "com.calmnest_x7k2.runable",
+      "package": "com.calmnest.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#0A0A0F"
@@ -17,7 +17,7 @@
       }
     },
     "ios": {
-      "bundleIdentifier": "com.calmnest_x7k2.runable",
+      "bundleIdentifier": "com.calmnest.app",
       "supportsTablet": true
     },
     "splash": {

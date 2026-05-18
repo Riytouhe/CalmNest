@@ -10,7 +10,11 @@
       "edgeToEdgeEnabled": true
     },
     "extra": {
-      "apiUrl": "https://eeend90ph090ng6h46mgy-preview-4200.runable.site/"
+      "apiUrl": "https://eeend90ph090ng6h46mgy-preview-4200.runable.site/",
+      "router": {},
+      "eas": {
+        "projectId": "c3b841ea-17e5-4a18-ad7c-599bc95d284f"
+      }
     },
     "ios": {
       "bundleIdentifier": "com.calmnest_x7k2.runable",
@@ -27,13 +31,14 @@
     "scheme": "mobile",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "owner": "maxdoogi"
   }
 }

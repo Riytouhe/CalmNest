@@ -7,6 +7,7 @@ import {
   Animated,
   Easing,
   TextInput,
+  Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useEffect, useRef } from "react";
@@ -172,6 +173,14 @@ export default function WaterScreen() {
 
   useEffect(() => {
     Notifications?.requestPermissionsAsync();
+    if (Platform.OS === "android" && Notifications) {
+      Notifications.setNotificationChannelAsync("water-reminders", {
+        name: "Water Reminders",
+        importance: Notifications.AndroidImportance.HIGH,
+        vibrationPattern: [0, 250, 250, 250],
+        sound: true,
+      });
+    }
   }, []);
 
   function pop() {
@@ -225,7 +234,11 @@ export default function WaterScreen() {
     }
     await Notifications.cancelAllScheduledNotificationsAsync();
     await Notifications.scheduleNotificationAsync({
-      content: { title: "Water Reminder 💧", body: "Stay hydrated! Drink a glass of water." },
+      content: {
+        title: "Water Reminder 💧",
+        body: "Stay hydrated! Drink a glass of water.",
+        ...(Platform.OS === "android" ? { channelId: "water-reminders" } : {}),
+      },
       trigger: { type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: secs, repeats: true },
     });
     setRemindersActive(true);

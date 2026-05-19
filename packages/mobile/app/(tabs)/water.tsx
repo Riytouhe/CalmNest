@@ -172,15 +172,20 @@ export default function WaterScreen() {
   const fillColor = progress >= 1 ? C.teal : C.accent;
 
   useEffect(() => {
-    Notifications?.requestPermissionsAsync();
-    if (Platform.OS === "android" && Notifications) {
-      Notifications.setNotificationChannelAsync("water-reminders", {
-        name: "Water Reminders",
-        importance: Notifications.AndroidImportance.HIGH,
-        vibrationPattern: [0, 250, 250, 250],
-        sound: true,
-      });
+    async function setup() {
+      if (Platform.OS === "android" && Notifications) {
+        await Notifications.setNotificationChannelAsync("water-reminders", {
+          name: "Water Reminders",
+          importance: Notifications.AndroidImportance.MAX,
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: "#7C5CFC",
+          sound: "default",
+          enableVibrate: true,
+        });
+      }
+      await Notifications?.requestPermissionsAsync();
     }
+    setup();
   }, []);
 
   function pop() {
@@ -237,9 +242,15 @@ export default function WaterScreen() {
       content: {
         title: "Water Reminder 💧",
         body: "Stay hydrated! Drink a glass of water.",
+        sound: "default",
+        priority: "max",
+      },
+      trigger: {
+        type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+        seconds: secs,
+        repeats: true,
         ...(Platform.OS === "android" ? { channelId: "water-reminders" } : {}),
       },
-      trigger: { type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: secs, repeats: true },
     });
     setRemindersActive(true);
     toast.show(`Reminder set · every ${label}`);
